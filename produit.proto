@@ -1,0 +1,59 @@
+syntax = "proto3"; // Utilisation de la syntaxe Proto3
+package produit;
+
+// Définition des messages pour les produits
+message Produit {
+  string id = 1; // Identifiant du produit
+  string nom = 2; // Nom du produit
+  string description = 3; // Description du produit
+}
+
+message GetProduitRequest {
+  string produit_id = 1; // Identifiant du produit
+}
+
+message GetProduitResponse {
+  Produit produit = 1; // Produit trouvé
+}
+
+message SearchProduitsRequest {} // Demande de recherche de tous les produits
+
+message SearchProduitsResponse {
+  repeated Produit produits = 1; // Liste des produits
+}
+
+message CreateProduitRequest {
+  string nom = 1; // Nom du produit
+  string description = 2; // Description du produit
+}
+
+message CreateProduitResponse {
+  Produit produit = 1; // Produit créé
+}
+
+message DeleteProduitRequest { // Demande de suppression du produit
+  string produit_id = 1; // Identifiant du produit à supprimer
+}
+
+message DeleteProduitResponse { // Réponse à la suppression
+  string message = 1; // Message de confirmation
+}
+
+message UpdateProduitRequest {
+  string produit_id = 1; // Identifiant du produit à mettre à jour
+  string nom = 2; // Nouveau nom
+  string description = 3; // Nouvelle description
+}
+
+message UpdateProduitResponse {
+  Produit produit = 1; // Produit mis à jour
+}
+
+// Service Produit avec des opérations CRUD complètes
+service ProduitService {
+  rpc GetProduit(GetProduitRequest) returns (GetProduitResponse); // Obtenir un produit par ID
+  rpc SearchProduits(SearchProduitsRequest) returns (SearchProduitsResponse); // Obtenir tous les produits
+  rpc CreateProduit(CreateProduitRequest) returns (CreateProduitResponse); // Créer un produit
+  rpc DeleteProduit(DeleteProduitRequest) returns (DeleteProduitResponse); // Supprimer un produit par ID
+  rpc UpdateProduit(UpdateProduitRequest) returns (UpdateProduitResponse); // Mettre à jour un produit par ID
+}

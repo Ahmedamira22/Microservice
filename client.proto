@@ -1,0 +1,59 @@
+syntax = "proto3"; // Utiliser la syntaxe Proto3
+package client;
+
+// Définition des messages pour les clients
+message Client {
+  string id = 1; // Identifiant du client
+  string nom = 2; // Nom du client
+  string description = 3; // Description du client
+}
+
+message GetClientRequest {
+  string client_id = 1; // Identifiant du client
+}
+
+message GetClientResponse {
+  Client client = 1; // Client trouvé
+}
+
+message SearchClientsRequest {} // Demande de recherche de tous les clients
+
+message SearchClientsResponse {
+  repeated Client clients = 1; // Liste des clients
+}
+
+message CreateClientRequest {
+  string nom = 1; // Nom du client
+  string description = 2; // Description du client
+}
+
+message CreateClientResponse {
+  Client client = 1; // Client créé
+}
+
+message DeleteClientRequest {
+  string client_id = 1; // Identifiant du client à supprimer
+}
+
+message DeleteClientResponse {
+  string message = 1; // Message de confirmation de suppression
+}
+
+message UpdateClientRequest { // Demande de mise à jour du client
+  string client_id = 1; // ID du client
+  string nom = 2; // Nouveau nom
+  string description = 3; // Nouvelle description
+}
+
+message UpdateClientResponse { // Réponse à la mise à jour
+  Client client = 1; // Client mis à jour
+}
+
+// Service Client avec toutes les opérations CRUD
+service ClientService {
+  rpc GetClient(GetClientRequest) returns (GetClientResponse); // Obtenir un client par ID
+  rpc SearchClients(SearchClientsRequest) returns (SearchClientsResponse); // Obtenir tous les clients
+  rpc CreateClient(CreateClientRequest) returns (CreateClientResponse); // Créer un client
+  rpc DeleteClient(DeleteClientRequest) returns (DeleteClientResponse); // Supprimer un client par ID
+  rpc UpdateClient(UpdateClientRequest) returns (UpdateClientResponse); // Mettre à jour un client par ID
+}
